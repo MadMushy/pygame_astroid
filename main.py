@@ -8,6 +8,12 @@ def main():
     # Set screen size using constants
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     
+    # Set up a clock for controlling FPS
+    clock = pygame.time.Clock()
+
+    # Time DELTA, useful for animiations / movements
+    dt = 0
+
     # Create infinate while loop for game logic
     running = True
 
@@ -23,10 +29,14 @@ def main():
         # Update contents of entire discplay
         pygame.display.flip()
 
+        dt = clock.tick(60) / 1000       # Limit FPS to 60
+
 
     print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
 
+# Ensures that the main function will only be called only when the file is run directly
+# Considered the pythonic was to structure executable program in python
 if __name__ == "__main__":
     main()
