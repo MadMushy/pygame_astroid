@@ -1,5 +1,6 @@
 import pygame                    # Import Pygame
 from constants import *          # Pull from constants.txt
+from player import Player
 
 def main():
     # Initialize pygame
@@ -17,6 +18,9 @@ def main():
     # Create infinate while loop for game logic
     running = True
 
+    player = Player((SCREEN_WIDTH/2), (SCREEN_HEIGHT/2))
+    
+
     while running:
 
         for event in pygame.event.get():
@@ -26,11 +30,13 @@ def main():
         # Fill in screen with black
         screen.fill((0, 0, 0))
         
+        player.draw(screen)
+
         # Update contents of entire discplay
         pygame.display.flip()
 
         dt = clock.tick(60) / 1000       # Limit FPS to 60
-
+        
 
     print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
