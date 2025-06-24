@@ -30,6 +30,8 @@ def main():
         # Fill in screen with black
         screen.fill((0, 0, 0))
         
+        player.update(dt)
+
         player.draw(screen)
 
         # Update contents of entire discplay
