@@ -1,6 +1,6 @@
 import pygame                    # Import Pygame
 from constants import *          # Pull from constants.txt
-from player import Player
+from player import Player        # Pull from player.py
 
 def main():
     # Initialize pygame
@@ -18,6 +18,7 @@ def main():
     # Create infinate while loop for game logic
     running = True
 
+    # Calling the Player method and setting X and Y
     player = Player((SCREEN_WIDTH/2), (SCREEN_HEIGHT/2))
     
 
@@ -30,6 +31,7 @@ def main():
         # Fill in screen with black
         screen.fill((0, 0, 0))
         
+        # Update the player rotation when the key is pressed.
         player.update(dt)
 
         player.draw(screen)
