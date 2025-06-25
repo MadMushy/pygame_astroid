@@ -72,3 +72,5 @@ class Player(CircleShape):
         # Update the position by moving in forward direction
         # Scaled by player speed and time delta
         self.position += forward * PLAYER_SPEED * dt
+
+        this is somthing
