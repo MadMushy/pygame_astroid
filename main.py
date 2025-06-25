@@ -1,6 +1,8 @@
 import pygame                    # Import Pygame
 from constants import *          # Pull from constants.txt
 from player import Player        # Pull from player.py
+from asteroid import Asteroid    # Pull from asteroid.py
+from asteroidfield import AsteroidField
 
 def main():
     # Initialize pygame
@@ -14,7 +16,26 @@ def main():
 
     # Time DELTA, useful for animiations / movements
     dt = 0
+    
+    # Create two groups for Player
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
 
+    # Create group for astroids
+    asteroids = pygame.sprite.Group()
+
+    # Set static containers for Asteroid class
+    Asteroid.containers = (asteroids, updatable, drawable)
+
+    # Set static container for Asteroid Field class
+    AsteroidField.containers = updatable
+
+    # Create a new AsteroidField object
+    asteroid_field = AsteroidField()
+
+    # Place all of Player into two containers
+    Player.containers = (updatable, drawable)
+    
     # Create infinate while loop for game logic
     running = True
 
@@ -27,14 +48,16 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT: # If the user clicks the exit button
                 running = False           # Stops game
+        
+        # Update
+        updatable.update(dt)
 
         # Fill in screen with black
         screen.fill((0, 0, 0))
-        
-        # Update the player rotation when the key is pressed.
-        player.update(dt)
 
-        player.draw(screen)
+        # Iterate over all items in drawable container and draw them to the screen
+        for item in drawable:
+            item.draw(screen)
 
         # Update contents of entire discplay
         pygame.display.flip()
