@@ -1,5 +1,7 @@
 import pygame
+import random
 from circleshape import *
+from constants import *
 
 # Define a new class Astroid that inherits from Circleshape
 class Asteroid(CircleShape):
@@ -23,4 +25,25 @@ class Asteroid(CircleShape):
         # Move the astroid position by its velocity scaled on the time delta.
         self.position += self.velocity*dt
 
+    def split(self):
+        
+        # Kill current asteroid
+        self.kill()
 
+        # If radius is below or at the min radius just return was a small asteroid
+        if self.radius <= ASTEROID_MIN_RADIUS:
+            return
+        
+        if self.radius > ASTEROID_MIN_RADIUS:
+            
+            new_angle = random.uniform(20, 50)
+            
+            angle_one = self.velocity.rotate(new_angle)
+            angle_two = self.velocity.rotate(-new_angle)
+
+            new_radius = self.radius - ASTEROID_MIN_RADIUS
+
+            asteroid = Asteroid(self.position.x, self.position.y, new_radius)
+            asteroid.velocity = angle_one * 1.2
+            asteroid = Asteroid(self.position.x, self.position.y, new_radius)
+            asteroid.velocity = angle_two * 1.2
