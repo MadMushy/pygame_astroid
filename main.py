@@ -1,10 +1,10 @@
 import pygame                    # Import Pygame
-import sys
+import sys                       # Import system commands   
 from constants import *          # Pull from constants.txt
 from player import Player        # Pull from player.py
 from asteroid import Asteroid    # Pull from asteroid.py
 from asteroidfield import AsteroidField
-from circleshape import *
+from shot import Shot
 
 def main():
     # Initialize pygame
@@ -19,24 +19,20 @@ def main():
     # Time DELTA, useful for animiations / movements
     dt = 0
     
-    # Create two groups for Player
+    # Groups
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
-
-    # Create group for astroids
     asteroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
 
-    # Set static containers for Asteroid class
+    # Set up static containers
     Asteroid.containers = (asteroids, updatable, drawable)
-
-    # Set static container for Asteroid Field class
     AsteroidField.containers = updatable
-
-    # Create a new AsteroidField object
-    asteroid_field = AsteroidField()
-
-    # Place all of Player into two containers
     Player.containers = (updatable, drawable)
+    Shot.containers = (shots, updatable, drawable)
+    
+    # Create a new AsteroidFIeld Object
+    asteroid_field = AsteroidField()
     
     # Create infinate while loop for game logic
     running = True

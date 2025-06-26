@@ -1,5 +1,6 @@
 from circleshape import *  # Import all classes and functions from the circleshape module
 from constants import *    # Import all constants (like PLAYER_RADIUS, PLAYER_TURN_SPEED) from the constants module
+from shot import Shot
 
 # Define a Player class that inherits from CircleShape
 class Player(CircleShape):
@@ -64,6 +65,13 @@ class Player(CircleShape):
         # If the S key is pressef move backwards
         if keys[pygame.K_s]:
             self.move(-dt)
+
+        if keys[pygame.K_SPACE]:
+            self.shoot()
+
+    def shoot(self):
+        shot = Shot(self.position.x, self.position.y)
+        shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation)*PLAYER_SHOOT_SPEED
 
     def move(self, dt):
         # Calculate the forward direction vector based on current rotation 
