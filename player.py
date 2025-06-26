@@ -18,6 +18,9 @@ class Player(CircleShape):
         # Set the initial rotation angle (in degrees) to 0
         self.rotation = 0
         
+        # Initalize a shot timer set to zero
+        self.shoot_timer = 0
+        
     # Method to generate the triangle shape representing the player
     def triangle(self):
         # Calculate the forward direction vector based on the current rotation
@@ -52,6 +55,9 @@ class Player(CircleShape):
     def update(self, dt):
         # Get the current state of all keyboard keys
         keys = pygame.key.get_pressed()
+        
+        # shot timer goes down at the rate of time delta
+        self.shoot_timer -= dt
 
         # If the 'A' key is pressed, rotate the player left
         if keys[pygame.K_a]:
@@ -65,12 +71,19 @@ class Player(CircleShape):
         # If the S key is pressef move backwards
         if keys[pygame.K_s]:
             self.move(-dt)
-
+        # If the space bar is pressed run the shoot function
         if keys[pygame.K_SPACE]:
             self.shoot()
 
     def shoot(self):
+        # if the shot timer is above zero return before preforming a shot
+        if self.shoot_timer > 0:
+            return
+        # Set the timer to .3 before preforming a shot.
+        self.shoot_timer = PLAYER_SHOOT_COOLDOWN
+        # Calls the Shot class and set starting position at the player location
         shot = Shot(self.position.x, self.position.y)
+        # Sets the shot to start at tip of player and move off in same diecion 
         shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation)*PLAYER_SHOOT_SPEED
 
     def move(self, dt):
